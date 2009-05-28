@@ -963,9 +963,11 @@ DateTimeX::Lite - A Low Calorie DateTime
 
 =head1 DESCRIPTION
 
-This is a lightweight version of DateTime.pm, which requires no XS, and aims to be light(er) than the original, for a given subset of the problems that the original DateTime.pm can solve. The idea is to encourage light users to use DateTime compatible API, while adapting to realistic environments (such as people without access to C compilers, people on rental servers who can't install modules, people who needs to convince pointy-haired bosses that they're not sacrificing performance), so later when they find engineering freedom, they can switch back to the more reliable DateTime.pm.
+This is a lightweight version of DateTime.pm, which requires no XS, and aims to be light(er) than the original, for a given B<subset> of the problems that the original DateTime.pm can solve.
 
-Please make no mistake: THIS IS NOT A REPLACEMENT FOR Datetime.pm. I will try to keep up with DateTime.pm, but DateTime.pm is the referece implementation. This is just stripped down version.
+The idea is to encourage light users to use DateTime compatible API, while adapting to realistic environments (such as people without access to C compilers, people on rental servers who can't install modules, people who needs to convince pointy-haired bosses that they're not sacrificing performance), so later when they find engineering freedom, they can switch back to the more reliable DateTime.pm.
+
+Please make no mistake: B<THIS IS NOT A REPLACEMENT FOR Datetime.pm>. I will try to keep up with DateTime.pm, but DateTime.pm is the referece implementation. This is just stripped down version.
 
 Please also note that internally, this module is a complete rip-off of the original DateTime.pm module. The author simply copied and pasted about 90% of the code, tweaked it and repackaged it. All credits go to the original DateTime.pm's authors.
 
@@ -1010,7 +1012,7 @@ While given all of the above, we would like to leave a way for users to easily (
 
 =head1 COMPATIBILITY WITH DateTime.pm
 
-DateTimeX::Lite does not intend to be a drop-in replacement for DateTime.pm. 
+As stated elsewhere, DateTimeX::Lite does not intend to be a drop-in replacement for DateTime.pm. 
 
 You should not expect other DateTime::* modules (such as Format and Calendar) to work with it. It might, but we won't guarantee it. 
 
@@ -1018,7 +1020,7 @@ We feel that if you use the extended features of the DateTime family, you should
 
 =head2 NOTABLE DIFFERENCES
 
-As stated above, DateTimeX::Lite tries to be as compatible as possible with DateTime.pm, but there are a few places it deliberately changed from DateTime.pm. Some notable differences from DateTime.pm are as follows
+DateTimeX::Lite tries to be as compatible as possible with DateTime.pm, but there are a few places it deliberately changed from DateTime.pm. Some notable differences from DateTime.pm are as follows
 
 =over 4
 
@@ -1044,9 +1046,9 @@ and change them to
 
     DateTimeX::Lite::TimeZone->load( name => 'Asia/Tokyo' );
 
-Singletons are okay, they serve a particular purpose. But besides being a memory hog of relative low benefit, I've had claims from users questioning the benefit of timezones and locales when they saw that those two distributions installed hundreds of singetong classes.
+Singletons are okay, they serve a particular purpose. But besides being a memory hog of relative low benefit, I've had claims from users questioning the benefit of timezones and locales when they saw that those two distributions installed hundreds of singleton classes.
 
-With this version, the objects are mostly the just regular objects, and the exact definition for each timezone/locale is stored in data files. (TODO: They can be located anywhere DateTimeX::Lite can find them)
+With this version, the objects are just regular objects, and the exact definition for each timezone/locale is stored in data files. (TODO: They can be located anywhere DateTimeX::Lite can find them)
 
 TODO: We want to make it easy to pick and choose which locales/timezones to be available -- DateTime::TimeZone and Locale comes with the full-set, and normally we don't need this feature. For example, I only use Asia/Tokyo and UTC time zones for my dayjob. When we ask casual users to install a datetime package, we do not want to overwhelm then with 100+ timezones and locales.
 
