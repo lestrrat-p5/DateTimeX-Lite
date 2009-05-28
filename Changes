@@ -1,0 +1,13 @@
+Changes
+=======
+
+0.00001_03 Feb 19 2009
+  * Explicitly require Carp
+  * Add List::MoreUtils requirement
+
+0.00001_02 Feb 14 2009
+  * Change name to DateTimeX::Lite, full support for timezones and locales.
+  * I'm sure there are still lots of holes. Please let me know.
+
+0.00001_01
+  * Initial release.
