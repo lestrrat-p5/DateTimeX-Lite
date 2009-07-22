@@ -481,10 +481,10 @@ _format_for_yyyyMMMM
     }
 }
 
-sub month_name { $_[0]->month_format_wide()->[ $_[1]->month_0 ] }
-sub month_abbreviation { $_[0]->month_format_abbreviated()->[ $_[1]->month_0 ] }
-sub day_name { $_[0]->day_format_wide()->[ $_[1]->day_of_week_0 ] }
-sub day_abbreviation { $_[0]->day_format_abbreviated->[ $_[1]->day_of_week_0 ] }
+sub month_name { $_[0]->month_format_wide()->[ $_[1]->month - 1 ] }
+sub month_abbreviation { $_[0]->month_format_abbreviated()->[ $_[1]->month - 1 ] }
+sub day_name { $_[0]->day_format_wide()->[ $_[1]->day_of_week - 1 ] }
+sub day_abbreviation { $_[0]->day_format_abbreviated->[ $_[1]->day_of_week - 1 ] }
 
 
 sub add_aliases {

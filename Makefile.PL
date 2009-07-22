@@ -54,23 +54,28 @@ sub list_files {
     }, $base) ;
 }
 
+# XXX - This was a nice attempt, but I think it adds too much complexity
+# at this point. For now, stop the prompt and let everything load
 {
     my $locale_src = File::Spec->catdir("dat", "DateTimeX", "Lite", "Locale");
     my $locale_dst = File::Spec->catdir("share", "DateTimeX", "Lite", "Locale");
     my $tz_src = File::Spec->catdir("dat", "DateTimeX", "Lite", "TimeZone");
     my $tz_dst = File::Spec->catdir("share", "DateTimeX", "Lite", "TimeZone");
 
+=head1
     my $y_n = prompt(
         join("\n",
+            "",
             "DateTimeX::Lite by default comes with *ALL* possible locales and time zones.",
             "You may install everything, or you may pick which ones you want to install.",
             "\n",
             "Do you want to have me install everything (\"y\") or do you want to choose",
-            "which modules get install (\"n\")? (y|n)"
+            "which modules get install (\"n\")? "
         ),
         'y'
     );
-
+=cut
+    my $y_n = "yes";
     remove(\'-rf' => 'share') if -d 'share';
     if ($y_n =~ /^y(?:es)?$/i) {
         # If you're installing everything, we'll just copy it all
@@ -79,7 +84,11 @@ sub list_files {
         print <<EOM;
 
 We'll need you to tell us which locales and time zones you'd like to
-install. DateTimeX::Lite can recognize globs patterns for these, so you
+install.
+EOM
+
+        my $stub = <<EOM;
+DateTimeX::Lite can recognize globs patterns for these, so you
 may specify something like:
 
     ja*
@@ -92,6 +101,11 @@ EOM
         my (@locales, @timezones);
 
         while (1) {
+            print join( "\n",
+                "",
+                "[Locales]",
+                $stub
+            );
             my $pattern = prompt("Which locales would you like to install?");
 
             next unless length $pattern;
@@ -111,13 +125,19 @@ EOM
                 push @locales, $_;
             }
 
-            my $y_n = prompt("Do the above look okay to you? (y|n)", 'y');
+            print "\n";
+            my $y_n = prompt("Does the above look okay to you? (y|n)", 'y');
             if ($y_n =~ /^y(?:es)?$/i) {
                 last;
             }
         }
 
         while (1) {
+            print join( "\n",
+                "",
+                "[Time Zones]",
+                $stub
+            );
             my $pattern = prompt("Which time zones would you like to install?");
 
             next unless length $pattern;
@@ -126,7 +146,7 @@ EOM
                 next;
             }
 
-            $pattern =~ s/(?!\.dat)$/.dat/;
+            $pattern =~ s/(?<!\.dat)$/.dat/;
             print "Generting file list from '$pattern'...\n\n";
 
             $pattern = File::Spec->catfile($tz_src, $pattern);
@@ -137,13 +157,16 @@ EOM
                 push @timezones, $_;
             }
 
-            my $y_n = prompt("Do the above look okay to you? (y|n)", 'y');
+            print "\n";
+            my $y_n = prompt("Does the above look okay to you? (y|n)", 'y');
             if ($y_n =~ /^y(?:es)?$/i) {
                 last;
             }
         }
 
         {
+            # install aliases regardless
+            push @locales, 'Aliases.dat';
             foreach my $locale (@locales) {
                 my $src = File::Spec->catfile($locale_src, $locale);
                 my $dst = File::Spec->catfile($locale_dst, $locale);

@@ -4,7 +4,7 @@ use strict;
 
 use Test::More tests => 135;
 
-use DateTimeX::Lite qw(Arithmetic);
+use DateTimeX::Lite qw(Arithmetic ZeroBase);
 
 my $d = DateTimeX::Lite->new( year => 2001,
                        month => 7,

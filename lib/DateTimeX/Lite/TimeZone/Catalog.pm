@@ -11,7 +11,7 @@ use strict;
 
 use vars qw( @ALL @CATEGORY_NAMES %CATEGORIES %ZONES_BY_COUNTRY %LINKS $LOADED_CATALOG );
 
-sub OlsonVersion { '2009b' }
+sub OlsonVersion { '2009k' }
 
 %LINKS = (
   'AKST9AKDT' => 'America/Anchorage',

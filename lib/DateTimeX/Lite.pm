@@ -16,7 +16,6 @@ use DateTimeX::Lite::LeapSecond;
 use DateTimeX::Lite::Locale;
 use DateTimeX::Lite::Util;
 use Scalar::Util qw(blessed);
-use Time::Local qw( timegm_nocheck );
 
 our $VERSION = '0.00001';
 
@@ -435,8 +434,6 @@ sub ce_year {
     my $year = $_[0]->{local_c}{year};
     return $year <= 0 ? $year - 1 : $year
 }
-sub month_0 { $_[0]->{local_c}{month} - 1 }
-sub mon_0 { goto &month_0 };
 
 sub era_name { $_[0]->{locale}->era_wide->[ $_[0]->_era_index() ] }
 
@@ -454,30 +451,20 @@ sub year_with_christian_era { (abs $_[0]->ce_year) . $_[0]->christian_era }
 sub year_with_secular_era   { (abs $_[0]->ce_year) . $_[0]->secular_era }
 
 
-sub month_name { $_[0]->{locale}->month_format_wide->[ $_[0]->month_0() ] }
+sub month_name { $_[0]->{locale}->month_format_wide->[ $_[0]->month() - 1] }
 
-sub month_abbr { $_[0]->{locale}->month_format_abbreviated->[ $_[0]->month_0() ] }
+sub month_abbr { $_[0]->{locale}->month_format_abbreviated->[ $_[0]->month() - 1] }
 
 sub day_of_month { goto &day };
 sub mday { goto &day };
 sub weekday_of_month { use integer; ( ( $_[0]->day - 1 ) / 7 ) + 1 }
 
-sub quarter_name { $_[0]->{locale}->quarter_format_wide->[ $_[0]->quarter_0() ] }
-sub quarter_abbr { $_[0]->{locale}->quarter_format_abbreviated->[ $_[0]->quarter_0() ] }
-
-sub quarter_0 { $_[0]->{local_c}{quarter} - 1 }
-
-sub day_of_month_0 { $_[0]->{local_c}{day} - 1 }
-*day_0  = \&day_of_month_0;
-*mday_0 = \&day_of_month_0;
+sub quarter_name { $_[0]->{locale}->quarter_format_wide->[ $_[0]->quarter() - 1] }
+sub quarter_abbr { $_[0]->{locale}->quarter_format_abbreviated->[ $_[0]->quarter() - 1] }
 
 sub day_of_week { $_[0]->{local_c}{day_of_week} }
 *wday = \&day_of_week;
 *dow  = \&day_of_week;
-
-sub day_of_week_0 { $_[0]->{local_c}{day_of_week} - 1 }
-*wday_0 = \&day_of_week_0;
-*dow_0  = \&day_of_week_0;
 
 sub local_day_of_week
 {
@@ -496,27 +483,20 @@ sub local_day_of_week
 sub hour_1 { $_[0]->{local_c}{hour} == 0 ? 24 : $_[0]->{local_c}{hour} }
 
 sub hour_12   { my $h = $_[0]->hour % 12; return $h ? $h : 12 }
-sub hour_12_0 { $_[0]->hour % 12 }
 
 sub min { goto &minute };
 
 sub sec { goto &second };
 
-sub day_name { $_[0]->{locale}->day_format_wide->[ $_[0]->day_of_week_0() ] }
+sub day_name { $_[0]->{locale}->day_format_wide->[ $_[0]->day_of_week() - 1 ] }
 
-sub day_abbr { $_[0]->{locale}->day_format_abbreviated->[ $_[0]->day_of_week_0() ] }
+sub day_abbr { $_[0]->{locale}->day_format_abbreviated->[ $_[0]->day_of_week() - 1] }
 
 sub day_of_quarter { $_[0]->{local_c}{day_of_quarter} }
 *doq = \&day_of_quarter;
 
-sub day_of_quarter_0 { $_[0]->day_of_quarter - 1 }
-*doq_0 = \&day_of_quarter_0;
-
 sub day_of_year { $_[0]->{local_c}{day_of_year} }
 *doy = \&day_of_year;
-
-sub day_of_year_0 { $_[0]->{local_c}{day_of_year} - 1 }
-*doy_0 = \&day_of_year_0;
 
 sub am_or_pm { $_[0]->{locale}->am_pm_abbreviated->[ $_[0]->hour() < 12 ? 0 : 1 ] }
 
@@ -791,11 +771,12 @@ sub epoch
     return $self->{utc_c}{epoch}
         if exists $self->{utc_c}{epoch};
 
+    require Time::Local;
     my ( $year, $month, $day ) = $self->_utc_ymd;
     my @hms = $self->_utc_hms;
 
     $self->{utc_c}{epoch} =
-        timegm_nocheck( ( reverse @hms ),
+        Time::Local::timegm_nocheck( ( reverse @hms ),
                         $day,
                         $month - 1,
                         $year,

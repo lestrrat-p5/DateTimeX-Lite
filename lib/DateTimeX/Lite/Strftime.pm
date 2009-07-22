@@ -117,14 +117,14 @@ package DateTimeX::Lite;
           qr/QQQ/   => 'quarter_abbr',
           qr/(QQ?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->quarter() ) },
 
-          qr/MMMMM/ => sub { $_[0]->{locale}->month_format_narrow->[ $_[0]->month_0() ] },
+          qr/MMMMM/ => sub { $_[0]->{locale}->month_format_narrow->[ $_[0]->month() - 1 ] },
           qr/MMMM/  => 'month_name',
           qr/MMM/   => 'month_abbr',
           qr/(MM?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->month() ) },
 
-          qr/LLLLL/ => sub { $_[0]->{locale}->month_stand_alone_narrow->[ $_[0]->month_0() ] },
-          qr/LLLL/  => sub { $_[0]->{locale}->month_stand_alone_wide->[ $_[0]->month_0() ] },
-          qr/LLL/   => sub { $_[0]->{locale}->month_stand_alone_abbreviated->[ $_[0]->month_0() ] },
+          qr/LLLLL/ => sub { $_[0]->{locale}->month_stand_alone_narrow->[ $_[0]->month() - 1] },
+          qr/LLLL/  => sub { $_[0]->{locale}->month_stand_alone_wide->[ $_[0]->month() - 1 ] },
+          qr/LLL/   => sub { $_[0]->{locale}->month_stand_alone_abbreviated->[ $_[0]->month() - 1] },
           qr/(LL?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->month() ) },
 
           qr/(ww?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->week_number() ) },
@@ -136,25 +136,25 @@ package DateTimeX::Lite;
           qr/F/    => 'weekday_of_month',
           qr/(g+)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->mjd() ) },
 
-          qr/EEEEE/  => sub { $_[0]->{locale}->day_format_narrow->[ $_[0]->day_of_week_0() ] },
+          qr/EEEEE/  => sub { $_[0]->{locale}->day_format_narrow->[ $_[0]->day_of_week() - 1] },
           qr/EEEE/   => 'day_name',
           qr/E{1,3}/ => 'day_abbr',
 
-          qr/eeeee/ => sub { $_[0]->{locale}->day_format_narrow->[ $_[0]->day_of_week_0() ] },
+          qr/eeeee/ => sub { $_[0]->{locale}->day_format_narrow->[ $_[0]->day_of_week() - 1] },
           qr/eeee/  => 'day_name',
           qr/eee/   => 'day_abbr',
           qr/(ee?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->local_day_of_week() ) },
 
-          qr/ccccc/ => sub { $_[0]->{locale}->day_stand_alone_narrow->[ $_[0]->day_of_week_0() ] },
-          qr/cccc/  => sub { $_[0]->{locale}->day_stand_alone_wide->[ $_[0]->day_of_week_0() ] },
-          qr/ccc/   => sub { $_[0]->{locale}->day_stand_alone_abbreviated->[ $_[0]->day_of_week_0() ] },
+          qr/ccccc/ => sub { $_[0]->{locale}->day_stand_alone_narrow->[ $_[0]->day_of_week() - 1] },
+          qr/cccc/  => sub { $_[0]->{locale}->day_stand_alone_wide->[ $_[0]->day_of_week() - 1] },
+          qr/ccc/   => sub { $_[0]->{locale}->day_stand_alone_abbreviated->[ $_[0]->day_of_week() - 1] },
           qr/(cc?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->local_day_of_week() ) },
 
           qr/a/ => 'am_or_pm',
 
           qr/(hh?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->hour_12() ) },
           qr/(HH?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->hour() ) },
-          qr/(KK?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->hour_12_0() ) },
+          qr/(KK?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->hour() % 12 ) },
           qr/(kk?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->hour_1() ) },
           qr/(jj?)/ => sub { my $h = $_[0]->{locale}->prefers_24_hour_time() ? $_[0]->hour_12() : $_[0]->hour();
                              $_[0]->_zero_padded_number( $1, $h ) },

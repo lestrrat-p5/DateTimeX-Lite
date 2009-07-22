@@ -14,7 +14,7 @@ my @locale_ids   = map {
     $f
 } grep {
     !/Aliases\.dat$/;
-} sort <lib/DateTimeX/Lite/Locale/*.dat>;
+} sort <share/DateTimeX/Lite/Locale/*.dat>;
 # my %locale_names = map { $_ => 1 } 
 my %locale_ids   = map { $_ => 1 } @locale_ids;
 
