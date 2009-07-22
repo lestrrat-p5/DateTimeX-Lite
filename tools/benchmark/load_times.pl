@@ -1,22 +1,15 @@
 use strict;
-use Benchmark qw(cmpthese);
+use Benchmark qw(cmpthese timethese);
 
-cmpthese(500, {
-    dt => sub { 
-        require DateTime;
-        DateTime->import;
-        delete $INC{"DateTime.pm"};
+my $count = shift @ARGV || 100;
+cmpthese timethese $count => {
+    dt => sub {
+        system($^X, '-e', 'use DateTime') == 0 or die;
     },
     dt_lite => sub { 
-        require DateTimeX::Lite; 
-        DateTimeX::Lite->import();
-        delete $INC{"DateTime/Lite.pm"};
+        system($^X, '-Mblib', '-e', 'use DateTimeX::Lite') == 0 or die;
     },
     dt_lite_full => sub { 
-        require DateTimeX::Lite; 
-        DateTimeX::Lite->import( qw(Arithmetic Strftime) );
-        delete $INC{"DateTime/Lite.pm"};
-        delete $INC{"DateTime/Lite/Arithmetic.pm"};
-        delete $INC{"DateTime/Lite/Strftime.pm"};
+        system($^X, '-Mblib', '-e', 'use DateTimeX::Lite qw(Arithmetic Strftime)') == 0 or die;
     }
-});
+};
