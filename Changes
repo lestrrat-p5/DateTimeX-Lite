@@ -1,6 +1,11 @@
 Changes
 =======
 
+0.00001_04 Jul 22 2009
+  * Has it been that long? wow...
+  * Require installation of all locales and timezones. It was a mess.
+  * Pass tests
+
 0.00001_03 Feb 19 2009
   * Explicitly require Carp
   * Add List::MoreUtils requirement
