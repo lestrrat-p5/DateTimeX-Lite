@@ -28,14 +28,14 @@ if ($^O eq 'MSWin32') {
 if ($AUTHOR_MODE) {
     # XXX FIXME: locale generator should NOT depend on Moose
 
-    if (! -f 'dat/DateTimeX/Lite/Locale/en_US.dat') {
+    if (! -f 'share/DateTimeX/Lite/Locale/en_US.dat') {
         my $y_n = prompt("You don't seem to have locale  data generated.\nWould you like to download the cldr database and create them?", "y");
         if ($y_n =~ /^y(?:es)?$/i) {
             system($^X, "tools/locale/update-locales.pl", "--version", $CLDR_VERSION);
         }
     }
 
-    if (! -f 'dat/DateTimeX/Lite/TimeZone/Asia/Tokyo.dat' ) {
+    if (! -f 'share/DateTimeX/Lite/TimeZone/Asia/Tokyo.dat' ) {
         my $y_n = prompt("You don't seem to have time zone data generated.\nWould you like to download the olson database and create them? (this requires sudo)", "y");
         if ($y_n =~ /^y(?:es)?$/i) {
             system($^X, "tools/timezone/update-timezones.pl");
@@ -56,13 +56,12 @@ sub list_files {
 
 # XXX - This was a nice attempt, but I think it adds too much complexity
 # at this point. For now, stop the prompt and let everything load
-{
+if (0) {
     my $locale_src = File::Spec->catdir("dat", "DateTimeX", "Lite", "Locale");
     my $locale_dst = File::Spec->catdir("share", "DateTimeX", "Lite", "Locale");
     my $tz_src = File::Spec->catdir("dat", "DateTimeX", "Lite", "TimeZone");
     my $tz_dst = File::Spec->catdir("share", "DateTimeX", "Lite", "TimeZone");
 
-=head1
     my $y_n = prompt(
         join("\n",
             "",
@@ -74,7 +73,6 @@ sub list_files {
         ),
         'y'
     );
-=cut
     my $y_n = "yes";
     remove(\'-rf' => 'share') if -d 'share';
     if ($y_n =~ /^y(?:es)?$/i) {
