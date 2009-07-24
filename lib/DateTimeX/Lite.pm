@@ -20,7 +20,6 @@ use DateTimeX::Lite::LeapSecond;
 use DateTimeX::Lite::Locale;
 use DateTimeX::Lite::Util;
 use Scalar::Util qw(blessed);
-use SelfLoader;
 
 our $VERSION = '0.00001';
 
@@ -942,6 +941,10 @@ DateTimeX::Lite - A Low Calorie DateTime
     use DateTimeX::Lite qw(Strftime);
     $dt->strftime('%Y %m %d');
 
+    # ZeroBase accessors doesn't come with DateTimeX::Lite by default
+    use DateTimeX::Lite qw(ZeroBase);
+    $dt->month_0;
+
 =head1 DESCRIPTION
 
 This is a lightweight version of DateTime.pm, which requires no XS, and aims to be light(er) than the original, for a given B<subset> of the problems that the original DateTime.pm can solve.
@@ -1011,9 +1014,13 @@ For example, A lot of times you don't even need to do date time arithmetic. Thes
 
     use DateTimeX::Lite qw(Arithmetic);
 
-Also, strftime() imposes a lot of code on DateTime. So if ymd(), iso8601() or the like is sufficient, it would be best not to load it. To load, include "Strftime" in the use line.
+Similarly, strftime() imposes a lot of code on DateTime. So if ymd(), iso8601() or the like is sufficient, it would be best not to load it. To load, include "Strftime" in the use line.
 
     use DateTimeX::Lite qw(Strftime);
+
+Zero-based accessors are also taken out of the core DateTimeX::Lite code.
+
+    use DateTimeX::Lite qw(ZeroBase);
 
 =item DateTimeX::Lite::TimeZone and DateTimeX::Lite::Locale
 
