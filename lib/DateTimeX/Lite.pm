@@ -2,12 +2,16 @@ package DateTimeX::Lite;
 use strict;
 use warnings;
 use 5.008;
-use constant INFINITY     =>      (9 ** 9 ** 9);
-use constant NEG_INFINITY => -1 * (9 ** 9 ** 9);
-use constant NAN          => INFINITY - INFINITY;
-use constant SECONDS_PER_DAY => 86400;
-use constant MAX_NANOSECONDS => 1_000_000_000;  # 1E9 = almost 32 bits
-use constant LOCALE_SKIP => $ENV{DATETIMEX_LITE_LOCALE_SKIP} ? 1 : 0;
+use constant +{
+    INFINITY        =>      (9 ** 9 ** 9),
+    NEG_INFINITY    => -1 * (9 ** 9 ** 9),
+    SECONDS_PER_DAY => 86400,
+    MAX_NANOSECONDS => 1_000_000_000,  # 1E9 = almost 32 bits
+    LOCALE_SKIP     => $ENV{DATETIMEX_LITE_LOCALE_SKIP} ? 1 : 0,
+};
+
+use constant NAN    => INFINITY - INFINITY;
+
 use Carp ();
 use DateTimeX::Lite::Duration;
 use DateTimeX::Lite::Infinite;
@@ -16,6 +20,7 @@ use DateTimeX::Lite::LeapSecond;
 use DateTimeX::Lite::Locale;
 use DateTimeX::Lite::Util;
 use Scalar::Util qw(blessed);
+use SelfLoader;
 
 our $VERSION = '0.00001';
 
@@ -28,6 +33,14 @@ use overload (
     'ne'  => '_string_not_equals_overload',
 );
 
+BEGIN {
+    my @local_c_comp = qw(year month day hour minute second quarter);
+    foreach my $comp (@local_c_comp) {
+        no strict 'refs';
+        *{$comp} = sub { $_[0]->{local_c}{$comp} };
+    }
+}
+
 our $DefaultLocale = 'en_US';
 
 sub import {
@@ -37,16 +50,6 @@ sub import {
         die "DateTimeX::Lite failed to load $component component: $@" if $@;
     }
 }
-
-{
-    my @local_c_comp = qw(year month day hour minute second quarter);
-    foreach my $comp (@local_c_comp) {
-        no strict 'refs';
-        *{$comp} = sub { $_[0]->{local_c}{$comp} };
-    }
-}
-
-
 
 sub utc_rd_values { @{ $_[0] }{ 'utc_rd_days', 'utc_rd_secs', 'rd_nanosecs' } }
 sub local_rd_values { @{ $_[0] }{ 'local_rd_days', 'local_rd_secs', 'rd_nanosecs' } }
@@ -74,10 +77,7 @@ sub jd
 
 sub mjd { $_[0]->jd - 2_400_000.5 }
 
-
-# XXX Prime candidate for SelfLoading
 sub clone { bless { %{ $_[0] } }, ref $_[0] }
-# XXX
 
 sub to_datetime {
     eval {
