@@ -3,7 +3,7 @@
 use strict;
 
 use Test::More tests => 172;
-use DateTimeX::Lite qw(Arithmetic);
+use DateTimeX::Lite qw(Arithmetic Overload);
 
 # tests using UTC times
 {

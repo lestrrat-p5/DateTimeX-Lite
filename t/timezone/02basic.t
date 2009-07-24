@@ -6,7 +6,7 @@ use Test::More;
 
 use lib File::Spec->catdir( File::Spec->curdir, 't' );
 
-use DateTimeX::Lite qw(Arithmetic);
+use DateTimeX::Lite qw(Arithmetic Overload);
 use DateTimeX::Lite::TimeZone;
 
 my @names = DateTimeX::Lite::TimeZone::all_names;

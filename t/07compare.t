@@ -4,7 +4,7 @@ use strict;
 
 use Test::More tests => 26;
 
-use DateTimeX::Lite;
+use DateTimeX::Lite qw(Overload);
 
 my $date1 = DateTimeX::Lite->new( year => 1997, month => 10, day => 24,
                            hour => 12, minute => 0, second => 0,

@@ -4,7 +4,7 @@ use strict;
 
 use Test::More tests => 124;
 
-use DateTimeX::Lite qw(Arithmetic);
+use DateTimeX::Lite qw(Arithmetic Overload);
 
 # These tests should be the final word on dt subtraction involving a
 # DST-changing time zone

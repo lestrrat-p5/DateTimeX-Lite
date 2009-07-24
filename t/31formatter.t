@@ -15,7 +15,7 @@ BEGIN
     plan tests => 11;
 }
 
-use DateTimeX::Lite qw(Strftime);
+use DateTimeX::Lite qw(Strftime Overload);
 
 my $formatter =
     DateTime::Format::Strptime->new( pattern => '%Y%m%d %T',

@@ -23,15 +23,6 @@ use Scalar::Util qw(blessed);
 
 our $VERSION = '0.00001';
 
-use overload (
-    fallback => 1,
-    '<=>' => '_compare_overload',
-    'cmp' => '_compare_overload',
-    '""'  => '_stringify_overload',
-    'eq'  => '_string_equals_overload',
-    'ne'  => '_string_not_equals_overload',
-);
-
 BEGIN {
     my @local_c_comp = qw(year month day hour minute second quarter);
     foreach my $comp (@local_c_comp) {
@@ -375,38 +366,6 @@ sub last_day_of_month {
     }
 
     return $class->new(%p, day => DateTimeX::Lite::Util::month_length($p{year}, $p{month}));
-}
-
-# These can't go to SelfLoader section, as it needs to be present when 
-# overload.pm attempts to look for it
-sub _stringify_overload {
-    my $self = shift;
-
-    return $self->iso8601 unless $self->{formatter};
-    return $self->{formatter}->format_datetime($self);
-}
-
-sub _compare_overload
-{
-    # note: $_[1]->compare( $_[0] ) is an error when $_[1] is not a
-    # DateTime (such as the INFINITY value)
-    return $_[2] ? - $_[0]->compare( $_[1] ) : $_[0]->compare( $_[1] );
-}
-
-sub _string_equals_overload {
-    my ( $class, $dt1, $dt2 ) = ref $_[0] ? ( undef, @_ ) : @_;
-
-    return unless(
-        blessed $dt1 && $dt1->can('utc_rd_values') &&
-        blessed $dt2 && $dt2->can('utc_rd_values')
-    );
-
-    $class ||= ref $dt1;
-    return ! $class->compare( $dt1, $dt2 );
-}
-
-sub _string_not_equals_overload {
-    return ! _string_equals_overload(@_);
 }
 
 sub offset                     { $_[0]->{tz}->offset_for_datetime( $_[0] ) }
@@ -945,6 +904,14 @@ DateTimeX::Lite - A Low Calorie DateTime
     use DateTimeX::Lite qw(ZeroBase);
     $dt->month_0;
 
+    # Overloading is disabled by default
+    use DateTimeX::Lite qw(Overload);
+
+    print "the date is $dt\n";
+    if ($dt1 < $dt2) {
+        print "dt1 is less than dt2\n";
+    }
+
 =head1 DESCRIPTION
 
 This is a lightweight version of DateTime.pm, which requires no XS, and aims to be light(er) than the original, for a given B<subset> of the problems that the original DateTime.pm can solve.
@@ -1021,6 +988,12 @@ Similarly, strftime() imposes a lot of code on DateTime. So if ymd(), iso8601() 
 Zero-based accessors are also taken out of the core DateTimeX::Lite code.
 
     use DateTimeX::Lite qw(ZeroBase);
+
+Overload operators are also taken out. If you want to automatically compare or
+stringify two DateTimeX::Lite objects using standard operators, you need to
+include Overload:
+
+    use DateTimeX::Lite qw(Overload);
 
 =item DateTimeX::Lite::TimeZone and DateTimeX::Lite::Locale
 

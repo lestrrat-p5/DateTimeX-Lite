@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More;
 
-use DateTimeX::Lite qw(Arithmetic Strftime);
+use DateTimeX::Lite qw(Arithmetic Strftime Overload);
 
 plan tests => 101;
 

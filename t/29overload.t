@@ -4,7 +4,7 @@ use strict;
 
 use Test::More tests => 12;
 
-use DateTimeX::Lite qw(Arithmetic);
+use DateTimeX::Lite qw(Arithmetic Overload);
 
 {
     my $dt = DateTimeX::Lite->new( year => 1900, month => 12, day => 1 );

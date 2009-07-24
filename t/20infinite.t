@@ -4,7 +4,7 @@ use strict;
 
 use Test::More tests => 42;
 
-use DateTimeX::Lite qw(Arithmetic);
+use DateTimeX::Lite qw(Arithmetic Overload);
 
 my $pos = DateTimeX::Lite::Infinite::Future->new;
 my $neg = DateTimeX::Lite::Infinite::Past->new;
