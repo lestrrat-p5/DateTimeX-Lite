@@ -10,6 +10,6 @@ cmpthese timethese $count => {
         system($^X, '-Mblib', '-e', 'use DateTimeX::Lite') == 0 or die;
     },
     dt_lite_full => sub { 
-        system($^X, '-Mblib', '-e', 'use DateTimeX::Lite qw(Arithmetic Strftime)') == 0 or die;
+        system($^X, '-Mblib', '-e', 'use DateTimeX::Lite qw(Arithmetic Strftime ZeroBase Overload)') == 0 or die;
     }
 };
