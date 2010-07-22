@@ -12,6 +12,10 @@ use constant +{
 
 use constant NAN    => INFINITY - INFINITY;
 
+if (LOCALE_SKIP) {
+    warn "We're skipping locale handling. You shouldn't be doing this unless you're generating locale data";
+}
+
 use Carp ();
 use DateTimeX::Lite::Duration;
 use DateTimeX::Lite::Infinite;
@@ -934,7 +938,7 @@ In particular, I'm thinking of people who wants to simply grab a date, maybe do 
 
 =item (2) Target the newbies who are afraid of XS code. 
 
-Let's face it, /we/ the developers know how to deal with XS. But we can't expect that out of everybody.
+Let's face it, /we/ the developers know how to deal with XS. But we can't expect that out of everybody. DateTime.pm doesn't require XS, but to get decent performance it's sort of a requirement. We do our best to get there without XS.
 
 =item (3) Get better performance.
 
