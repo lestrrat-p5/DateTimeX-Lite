@@ -1,8 +1,7 @@
 package # hide from PAUSE
     DateTimeX::Lite::Tool::Locale::LDML;
-use Moose;
-use Moose::Util::TypeConstraints;
-use MooseX::ClassAttribute;
+use Any::Moose;
+use Any::Moose 'Util::TypeConstraints';
 use utf8;
 
 use Data::Dumper;
@@ -32,29 +31,33 @@ has 'document' =>
       clearer  => '_clear_document',
     );
 
-class_has 'Aliases' =>
-    ( is      => 'ro',
-      isa     => 'HashRef',
-      lazy    => 1,
-      default => sub { return { 'C'             => 'en_US_POSIX',
-                                'POSIX'         => 'en_US_POSIX',
-                                # Apparently the Hebrew locale code was changed from iw to he at
-                                # one point.
-                                'iw'            => 'he',
-                                'iw_IL'         => 'he_IL',
-                                # CLDR got rid of no
-                                'no'            => 'nn',
-                                'no_NO'         => 'nn_NO',
-                                'no_NO_NY'      => 'nn_NO',
-                              } },
-    );
+our %Aliases = (
+    'C'             => 'en_US_POSIX',
+    'POSIX'         => 'en_US_POSIX',
+    # Apparently the Hebrew locale code was changed from iw to he at
+    # one point.
+    # CLDR got rid of no
+    'no'            => 'nn',
+    'no_NO'         => 'nn_NO',
+    'no_NO_NY'      => 'nn_NO',
+);
 
-class_has 'FormatLengths' =>
-    ( is      => 'ro',
-      isa     => 'ArrayRef',
-      lazy    => 1,
-      default => sub { return [qw( full long medium short ) ] },
-    );
+sub Aliases {
+    my $class = shift;
+    return \%Aliases unless @_;
+    %Aliases = $_[0];
+    return \%Aliases;
+}
+
+our %FormatLengths = (
+    qw( full long medium short ) 
+);
+sub FormatLengths {
+    my $class = shift;
+    return \%FormatLengths unless @_;
+    %FormatLengths = $_[0];
+    return \%FormatLengths;
+}
 
 has 'version' =>
     ( is         => 'ro',
@@ -875,7 +878,7 @@ sub _find_one_node
 }
 
 __PACKAGE__->meta()->make_immutable();
-no Moose;
-no Moose::Util::TypeConstraints;
+no Any::Moose;
+no Any::Moose 'Util::TypeConstraints';
 
 1;

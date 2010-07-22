@@ -1,11 +1,11 @@
 package DateTimeX::Lite::Tool::Locale::Generator;
 use utf8;
-use Moose;
-use Moose::Util::TypeConstraints;
-use MooseX::Types::Path::Class qw(Dir);
+use Any::Moose;
+use Any::Moose 'Util::TypeConstraints';
 use Data::Dumper;
 use DateTimeX::Lite::Tool::Locale::ISO639;
 use DateTimeX::Lite::Tool::Locale::LDML;
+use Path::Class ();
 use File::chdir;
 use File::Temp ();
 use LWP::UserAgent;
@@ -13,7 +13,7 @@ use Carp::Always;
 
 our $VERSION = '0.00001';
 
-with 'MooseX::Getopt';
+with any_moose 'X::Getopt';
 
 subtype 'DateTimeX::Lite::Tool::Locale::Generator::Version'
     => as 'Str'
@@ -36,15 +36,15 @@ has 'version' => (
 
 has 'dest' => (
     is => 'rw',
-    isa => Dir,
+    isa => 'Path::Class::Dir',
     coerce => 1,
     default => sub { Path::Class::Dir->new(File::Temp::tempdir( CLEANUP => 1 )) }
 );
 
 __PACKAGE__->meta->make_immutable;
 
-no Moose;
-no Moose::Util::TypeConstraints;
+no Any::Moose;
+no Any::Moose 'Util::TypeConstraints';
 
 my %DATA;
 
@@ -133,7 +133,12 @@ EOF
 
     %Aliases = ( %Aliases, %{ DateTimeX::Lite::Tool::Locale::LDML->Aliases() } );
     { # generate Aliases.pm
-        open(my $fh, '>', Path::Class::File->new( qw(dat DateTimeX Lite Locale Aliases.dat) ) ) or die "Could not open file: $!";
+        my $dat = Path::Class::File->new( qw(dat DateTimeX Lite Locale Aliases.dat) ) ;
+        if (! -d $dat->parent) {
+            $dat->parent->mkpath;
+        }
+
+        open(my $fh, '>', $dat) or die "Could not open file $dat: $!";
         print $fh Data::Dumper::Dumper(\%Aliases);
         close($fh);
     }
