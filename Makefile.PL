@@ -221,6 +221,7 @@ build_requires 'File::Find';
 build_requires 'File::Path';
 build_requires 'File::Remove';
 test_requires 'Test::More' => '0.81';
+install_share;
 
 no_index directory => 'tools';
 tests 't/*.t t/*/*.t';
