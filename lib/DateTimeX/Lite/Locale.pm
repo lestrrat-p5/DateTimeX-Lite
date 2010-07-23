@@ -3,6 +3,7 @@
 package DateTimeX::Lite::Locale;
 use strict;
 use warnings;
+use File::ShareDir qw(dist_file);
 use File::Spec;
 use Carp ();
 
@@ -10,7 +11,9 @@ our %CachedLocales;
 our %Aliases;
 
 {
-    my $aliases = do 'DateTimeX/Lite/Locale/Aliases.dat' or die "cannot load alias database";
+    my $db = dist_file('DateTimeX-Lite', 'DateTimeX/Lite/Locale/Aliases.dat');
+    my $aliases = do $db
+        or die "cannot load alias database";
     %Aliases = %$aliases;
 }
 
