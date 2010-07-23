@@ -14,6 +14,7 @@ use DateTimeX::Lite::TimeZone::Local;
 use DateTimeX::Lite::TimeZone::OffsetOnly;
 use DateTimeX::Lite::TimeZone::UTC;
 use DateTimeX::Lite::OlsonDB;
+use File::ShareDir qw(dist_file);
 
 our %CachedTimeZones;
 
@@ -94,7 +95,10 @@ sub _load_time_zone {
     $file =~ s/-/_/g;
 
     # Quietly fail here, so we can let the proceeding section croak for us
-    return do "DateTimeX/Lite/TimeZone/$file";
+    eval {
+        $file = dist_file( 'DateTimeX-Lite', "DateTimeX/Lite/TimeZone/$file");
+    };
+    return $file ? do $file : ();
 }
 
 sub rules { $_[0]->{rules} }
@@ -195,7 +199,6 @@ sub _spans_binary_search
     while (1)
     {
         my $current = $self->{spans}[$i];
-
         if ( $seconds < $current->[$start] )
         {
             $max = $i;
