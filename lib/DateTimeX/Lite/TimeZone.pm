@@ -2,13 +2,8 @@ package DateTimeX::Lite::TimeZone;
 use strict;
 use warnings;
 
-BEGIN {
-    local $@;
-    eval {
-        require DateTimeX::Lite::TimeZone::Catalog;
-    }
-}
 use Carp ();
+use DateTimeX::Lite::TimeZone::Catalog;
 use DateTimeX::Lite::TimeZone::Floating;
 use DateTimeX::Lite::TimeZone::Local;
 use DateTimeX::Lite::TimeZone::OffsetOnly;
@@ -406,17 +401,10 @@ sub offset_as_string {
 # These methods all operate on data contained in the DateTime/TimeZone/Catalog.pm file.
 
 sub all_names {
-    if (! $DateTimeX::Lite::TimeZone::Catalog::LOADED_CATALOG ) {
-        DateTimeX::Lite::TimeZone::Catalog::load();
-    }
-
     return wantarray ? @DateTimeX::Lite::TimeZone::Catalog::ALL : [@DateTimeX::Lite::TimeZone::Catalog::ALL];
 }
 
 sub categories {
-    if (! $DateTimeX::Lite::TimeZone::Catalog::LOADED_CATALOG ) {
-        DateTimeX::Lite::TimeZone::Catalog::load();
-    }
     return wantarray
         ? @DateTimeX::Lite::TimeZone::Catalog::CATEGORY_NAMES
         : [@DateTimeX::Lite::TimeZone::Catalog::CATEGORY_NAMES];
@@ -457,7 +445,6 @@ sub names_in_country
         ? @{ $DateTimeX::Lite::TimeZone::Catalog::ZONES_BY_COUNTRY{ lc $_[0] } }
         : $DateTimeX::Lite::TimeZone::Catalog::ZONES_BY_COUNTRY{ lc $_[0] };
 }
-
 
 1;
 
@@ -684,64 +671,22 @@ If you subclass C<DateTimeX::Lite::TimeZone>, you will inherit its hooks,
 which may not work for your module, so please test the interaction of
 your module with Storable.
 
-=head1 SUPPORT
-
-Support for this module is provided via the datetime@perl.org email
-list. See http://datetime.perl.org/?MailingList for details.
-
-Please submit bugs to the CPAN RT system at
-http://rt.cpan.org/NoAuth/ReportBug.html?Queue=datetime%3A%3Atimezone
-or via email at bug-datetime-timezone@rt.cpan.org.
-
-=head1 DONATIONS
-
-If you'd like to thank me for the work I've done on this module,
-please consider making a "donation" to me via PayPal. I spend a lot of
-free time creating free software, and would appreciate any support
-you'd care to offer.
-
-Please note that B<I am not suggesting that you must do this> in order
-for me to continue working on this particular software. I will
-continue to do so, inasmuch as I have in the past, for as long as it
-interests me.
-
-Similarly, a donation made in this way will probably not make me work
-on this software much more, unless I get so many donations that I can
-consider working on free software full time, which seems unlikely at
-best.
-
-To donate, log into PayPal and send money to autarch@urth.org or use
-the button on this page:
-L<http://www.urth.org/~autarch/fs-donation.html>
-
 =head1 AUTHOR
 
-Dave Rolsky <autarch@urth.org>
+=over 4
 
-=head1 CREDITS
+=item Original DateTime.pm:
 
-This module was inspired by Jesse Vincent's work on
-Date::ICal::Timezone, and written with much help from the
-datetime@perl.org list.
-
-=head1 COPYRIGHT
-
-Copyright (c) 2003-2008 David Rolsky.  All rights reserved.  This
-program is free software; you can redistribute it and/or modify it
+Copyright (c) 2003-2008 David Rolsky C<< <autarch@urth.org> >>. All rights reserved.  
+This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
-The full text of the license can be found in the LICENSE file included
-with this module.
+=item DateTimeX::Lite tweaks
 
-=head1 SEE ALSO
+Daisuke Maki C<< <daisuke@endeworks.jp> >>
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
 
-datetime@perl.org mailing list
-
-http://datetime.perl.org/
-
-The tools directory of the DateTimeX::Lite::TimeZone distribution includes
-two scripts that may be of interest to some people.  They are
-parse_olson and tests_from_zdump.  Please run them with the --help
-flag to see what they can be used for.
+=back
 
 =cut
