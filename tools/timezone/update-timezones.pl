@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 
@@ -11,21 +11,21 @@ my $tempdir = File::Temp::tempdir( CLEANUP => 1 );
 {
     local $CWD = $tempdir;
 
-    my $ftp = Net::FTP->new( 'elsie.nci.nih.gov', Passive => 1 )
+    my $ftp = Net::FTP->new( 'elsie.nci.nih.gov' ) # , Passive => 1 )
         or die "Cannot connect to elsie.nci.nih.gov: $@";
     $ftp->login()
         or die 'Cannot login: ', $ftp->message;
     $ftp->cwd('/pub')
         or die 'Cannot cwd to /pub: ', $ftp->message;
+    $ftp->binary();
 
     for my $f ( $ftp->ls )
     {
         if ( $f =~ /^tz(?:code|data)/ )
         {
             print "Getting $f\n";
-            $ftp->get($f);
-
-            system( 'tar', 'xzf', $f );
+            $ftp->get($f) or die "get failed" . $ftp->message;
+            system( 'tar', '-xzf', $f ) == 0 or exit 1;
 
             ($olson_version) = $f =~ /(\d\d\d\d\w)/;
         }
