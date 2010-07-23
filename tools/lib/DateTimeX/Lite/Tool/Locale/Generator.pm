@@ -133,7 +133,7 @@ EOF
 
     %Aliases = ( %Aliases, %{ DateTimeX::Lite::Tool::Locale::LDML->Aliases() } );
     { # generate Aliases.pm
-        my $dat = Path::Class::File->new( qw(dat DateTimeX Lite Locale Aliases.dat) ) ;
+        my $dat = Path::Class::File->new( qw(share DateTimeX Lite Locale Aliases.dat) ) ;
         if (! -d $dat->parent) {
             $dat->parent->mkpath;
         }
