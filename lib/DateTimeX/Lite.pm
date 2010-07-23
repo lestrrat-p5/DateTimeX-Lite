@@ -12,19 +12,22 @@ use constant +{
 
 use constant NAN    => INFINITY - INFINITY;
 
-if (LOCALE_SKIP) {
-    warn "We're skipping locale handling. You shouldn't be doing this unless you're generating locale data";
-}
 
 use Carp ();
 use DateTimeX::Lite::Duration;
 use DateTimeX::Lite::Infinite;
 use DateTimeX::Lite::TimeZone;
 use DateTimeX::Lite::LeapSecond;
-use DateTimeX::Lite::Locale;
 use DateTimeX::Lite::Util;
 use Scalar::Util qw(blessed);
 
+BEGIN {
+    if (LOCALE_SKIP) {
+        warn "We're skipping locale handling. You shouldn't be doing this unless you're generating locale data";
+    } else {
+        require DateTimeX::Lite::Locale;
+    }
+}
 our $VERSION = '0.00001';
 
 BEGIN {
