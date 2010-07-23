@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
 
 use strict;
 
@@ -9,7 +9,7 @@ BEGIN {
     $ENV{DATETIMEX_LITE_LOCALE_SKIP} = 1;
 }
 
-use Carp::Always;
+# use Carp::Always;
 use Data::Dumper;
 use DateTimeX::Lite qw(Arithmetic);
 use DateTimeX::Lite::OlsonDB;
