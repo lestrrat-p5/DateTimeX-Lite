@@ -1897,11 +1897,11 @@ __END__
 
 =head1 NAME
 
-DateTime::TimeZone::Catalog - Provides a list of all valid time zone names
+DateTimeX::Lite::TimeZone::Catalog - Provides a list of all valid time zone names
 
 =head1 SYNOPSIS
 
-See DateTime::TimeZone for API details.
+See DateTimeX::Lite::TimeZone for API details.
 
 =head1 DESCRIPTION
 
