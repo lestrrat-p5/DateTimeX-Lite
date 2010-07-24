@@ -14,6 +14,7 @@ my $AUTHOR_MODE  = $ENV{AUTHOR_MODE}  ||
 name('DateTimeX-Lite');
 all_from('lib/DateTimeX/Lite.pm');
 
+requires 'File::ShareDir';
 requires 'SelfLoader'; 
 requires 'Scalar::Util';
 requires 'Time::Local';
