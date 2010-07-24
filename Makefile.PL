@@ -1,12 +1,11 @@
 use strict;
-use lib 'inc';
 use Cwd ();
 use inc::Module::Install;
-use File::Copy ();
-use File::Copy::Recursive qw/rcopy/;
-use File::Find ();
-use File::Path ();
-use File::Remove qw/remove/;
+# use File::Copy ();
+# use File::Find ();
+# use File::Path ();
+# use File::Remove qw/remove/;
+# use File::Copy::Recursive qw/rcopy/;
 
 my $CLDR_VERSION = $ENV{CLDR_VERSION} || '1.6.1';
 my $AUTHOR_MODE  = $ENV{AUTHOR_MODE}  || 
@@ -214,12 +213,12 @@ config ::
 EOM
 postamble $postamble;
 
-build_requires 'File::Basename';
-build_requires 'File::Copy';
-build_requires 'File::Copy::Recursive';
-build_requires 'File::Find';
-build_requires 'File::Path';
-build_requires 'File::Remove';
+# build_requires 'File::Basename';
+# build_requires 'File::Copy';
+# build_requires 'File::Copy::Recursive';
+# build_requires 'File::Find';
+# build_requires 'File::Path';
+# build_requires 'File::Remove';
 test_requires 'Test::More' => '0.81';
 install_share;
 
