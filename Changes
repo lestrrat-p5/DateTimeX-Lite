@@ -1,6 +1,10 @@
 Changes
 =======
 
+0.00002 Jul 24 2010
+  * Remove unnecessary dependency from Makefile.PL
+  * Fix docs
+
 0.00001 Jul 23 2010
   * Has it been that long? wow... (deja vu)
   * Prodded by an unexpected OSCON mention
