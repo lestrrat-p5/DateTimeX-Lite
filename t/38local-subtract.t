@@ -244,7 +244,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
     is( $deltas2{minutes}, -3, 'delta_minutes is 3' );
     is( $deltas2{seconds}, 0, 'delta_seconds is 0' );
     is( $deltas2{nanoseconds}, 0, 'delta_nanoseconds is 0' );
-    is( $dt2->clone->add_duration($dur2)->datetime, '2003-04-05T02:58:00', 'dt2 + dur2 != dt1' );
+    is( $dt2->clone->add_duration($dur2)->iso8601, '2003-04-05T02:58:00', 'dt2 + dur2 != dt1' );
     is( DateTimeX::Lite->compare( $dt2->clone->add_duration( $dur2->clock_duration )
                                ->add_duration( $dur2->calendar_duration ),
                            $dt1 ),

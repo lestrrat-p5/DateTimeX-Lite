@@ -40,7 +40,7 @@ use DateTimeX::Lite qw(Arithmetic);
     is( $epochtest->epoch, 997121000,
         "epoch method returns correct value");
     is( $epochtest->hour, 18, "hour" );
-    is( $epochtest->min, 3, "minute" );
+    is( $epochtest->minute, 3, "minute" );
 }
 
 {
@@ -81,7 +81,7 @@ use DateTimeX::Lite qw(Arithmetic);
     is( $epochtest->epoch, $expected,
         "epoch method returns correct value ($expected)");
     is( $epochtest->hour, 1, "hour" );
-    is( $epochtest->min, 30, "minute" );
+    is( $epochtest->minute, 30, "minute" );
 
     $epochtest->add( hours => 2 );
     $expected += 2 * 60 * 60;

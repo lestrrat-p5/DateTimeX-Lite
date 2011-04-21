@@ -113,7 +113,7 @@ my $leap_day = DateTimeX::Lite->new( year => 2004, month => 2, day => 29,
         $leap_day + DateTimeX::Lite::Duration->new( years => 1,
                                              end_of_month => 'wrap' );
 
-    is( $new->date, '2005-03-01', "new date should be 2005-03-01" );
+    is( $new->ymd, '2005-03-01', "new date should be 2005-03-01" );
 }
 
 {
@@ -121,7 +121,7 @@ my $leap_day = DateTimeX::Lite->new( year => 2004, month => 2, day => 29,
         $leap_day + DateTimeX::Lite::Duration->new( years => 1,
                                              end_of_month => 'limit' );
 
-    is( $new->date, '2005-02-28', "new date should be 2005-02-28" );
+    is( $new->ymd, '2005-02-28', "new date should be 2005-02-28" );
 }
 
 
@@ -130,12 +130,12 @@ my $leap_day = DateTimeX::Lite->new( year => 2004, month => 2, day => 29,
         $leap_day + DateTimeX::Lite::Duration->new( years => 1,
                                              end_of_month => 'preserve' );
 
-    is( $new->date, '2005-02-28', "new date should be 2005-02-28" );
+    is( $new->ymd, '2005-02-28', "new date should be 2005-02-28" );
 
     my $new2 =
         $leap_day + DateTimeX::Lite::Duration->new( months => 1,
                                              end_of_month => 'preserve' );
-    is( $new2->date, '2004-03-31', "new date should be 2004-03-31" );
+    is( $new2->ymd, '2004-03-31', "new date should be 2004-03-31" );
 }
 
 {

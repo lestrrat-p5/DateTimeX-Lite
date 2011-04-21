@@ -92,17 +92,17 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                          );
 
     $t->add( seconds => 60 );
-    is( $t->datetime, '1972-06-30T20:59:20', "normal add" );
+    is( $t->iso8601, '1972-06-30T20:59:20', "normal add" );
     is( $t->minute, 59, "min" );
     is( $t->second, 20, "sec" );
 
     $t->add( seconds => 60 );
-    is( $t->datetime, '1972-06-30T21:00:19', "add over a leap second" );
+    is( $t->iso8601, '1972-06-30T21:00:19', "add over a leap second" );
     is( $t->minute, 0, "min" );
     is( $t->second, 19, "sec" );
 
     $t->subtract( seconds => 20 );
-    is( $t->datetime, '1972-06-30T20:59:60', "subtract over a leap second" );
+    is( $t->iso8601, '1972-06-30T20:59:60', "subtract over a leap second" );
     is( $t->minute, 59, "min" );
     is( $t->second, 60, "sec" );
     is( $t->{utc_rd_secs} , 86400, "rd_sec" );
@@ -221,12 +221,12 @@ use DateTimeX::Lite qw(Arithmetic Overload);
     is( $t->hour, 23, 'hour after setting time zone' );
 
     $t->add( days => 1 );
-    is( $t->datetime, '1972-07-02T00:00:00',
+    is( $t->iso8601, '1972-07-02T00:00:00',
         'add 1 day starting on leap second' );
 
     $t->subtract( days => 1 );
 
-    is( $t->datetime, '1972-07-01T00:00:00',
+    is( $t->iso8601, '1972-07-01T00:00:00',
         'add and subtract 1 day starting on leap second' );
 
     is( $t->leap_seconds, 1, 'datetime has 1 leap second' );
@@ -423,7 +423,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( days => 2 );
 
-    is( $dt->datetime, '1972-07-02T23:58:20', "add two days crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-07-02T23:58:20', "add two days crossing a leap second (UTC)" );
 }
 
 # a bunch of tests that math works across a leap second for various time zones
@@ -435,7 +435,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( days => 2 );
 
-    is( $dt->datetime, '1972-07-02T20:58:20', "add two days crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-07-02T20:58:20', "add two days crossing a leap second (-0300)" );
 }
 
 {
@@ -446,7 +446,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( days => 2 );
 
-    is( $dt->datetime, '1972-07-03T02:58:20', "add two days crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-03T02:58:20', "add two days crossing a leap second (+0300)" );
 }
 
 {
@@ -457,7 +457,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( hours => 48 );
 
-    is( $dt->datetime, '1972-07-02T23:58:20', "add 48 hours crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-07-02T23:58:20', "add 48 hours crossing a leap second (UTC)" );
 }
 
 {
@@ -468,7 +468,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( hours => 48 );
 
-    is( $dt->datetime, '1972-07-02T20:58:20', "add 48 hours crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-07-02T20:58:20', "add 48 hours crossing a leap second (-0300)" );
 }
 
 {
@@ -479,7 +479,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( hours => 48 );
 
-    is( $dt->datetime, '1972-07-03T02:58:20', "add 48 hours crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-03T02:58:20', "add 48 hours crossing a leap second (+0300)" );
 }
 
 {
@@ -490,7 +490,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( minutes => 2880 );
 
-    is( $dt->datetime, '1972-07-02T23:58:20', "add 2880 minutes crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-07-02T23:58:20', "add 2880 minutes crossing a leap second (UTC)" );
 }
 
 {
@@ -501,7 +501,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( minutes => 2880 );
 
-    is( $dt->datetime, '1972-07-02T20:58:20', "add 2880 minutes crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-07-02T20:58:20', "add 2880 minutes crossing a leap second (-0300)" );
 }
 
 {
@@ -512,7 +512,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( minutes => 2880 );
 
-    is( $dt->datetime, '1972-07-03T02:58:20', "add 2880 minutes crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-03T02:58:20', "add 2880 minutes crossing a leap second (+0300)" );
 }
 
 {
@@ -523,7 +523,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( seconds => 172801 );
 
-    is( $dt->datetime, '1972-07-02T23:58:20', "add 172801 seconds crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-07-02T23:58:20', "add 172801 seconds crossing a leap second (UTC)" );
 }
 
 {
@@ -534,7 +534,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( seconds => 172801 );
 
-    is( $dt->datetime, '1972-07-02T20:58:20', "add 172801 seconds crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-07-02T20:58:20', "add 172801 seconds crossing a leap second (-0300)" );
 }
 
 {
@@ -545,7 +545,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->add( seconds => 172801 );
 
-    is( $dt->datetime, '1972-07-03T02:58:20', "add 172801 seconds crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-03T02:58:20', "add 172801 seconds crossing a leap second (+0300)" );
 }
 
 {
@@ -556,7 +556,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( days => 2 );
 
-    is( $dt->datetime, '1972-06-30T23:58:20', "subtract two days crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-06-30T23:58:20', "subtract two days crossing a leap second (UTC)" );
 }
 
 {
@@ -567,7 +567,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( days => 2 );
 
-    is( $dt->datetime, '1972-06-30T20:58:20', "subtract two days crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-06-30T20:58:20', "subtract two days crossing a leap second (-0300)" );
 }
 
 {
@@ -578,7 +578,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( days => 2 );
 
-    is( $dt->datetime, '1972-07-01T02:58:20', "subtract two days crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-01T02:58:20', "subtract two days crossing a leap second (+0300)" );
 }
 
 {
@@ -589,7 +589,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( hours => 48 );
 
-    is( $dt->datetime, '1972-06-30T23:58:20', "subtract 48 hours crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-06-30T23:58:20', "subtract 48 hours crossing a leap second (UTC)" );
 }
 
 {
@@ -600,7 +600,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( hours => 48 );
 
-    is( $dt->datetime, '1972-06-30T20:58:20', "subtract 48 hours crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-06-30T20:58:20', "subtract 48 hours crossing a leap second (-0300)" );
 }
 
 {
@@ -611,7 +611,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( hours => 48 );
 
-    is( $dt->datetime, '1972-07-01T02:58:20', "subtract 48 hours crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-01T02:58:20', "subtract 48 hours crossing a leap second (+0300)" );
 }
 
 {
@@ -622,7 +622,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( minutes => 2880 );
 
-    is( $dt->datetime, '1972-06-30T23:58:20', "subtract 2880 minutes crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-06-30T23:58:20', "subtract 2880 minutes crossing a leap second (UTC)" );
 }
 
 {
@@ -633,7 +633,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( minutes => 2880 );
 
-    is( $dt->datetime, '1972-06-30T20:58:20', "subtract 2880 minutes crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-06-30T20:58:20', "subtract 2880 minutes crossing a leap second (-0300)" );
 }
 
 {
@@ -644,7 +644,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( minutes => 2880 );
 
-    is( $dt->datetime, '1972-07-01T02:58:20', "subtract 2880 minutes crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-01T02:58:20', "subtract 2880 minutes crossing a leap second (+0300)" );
 }
 
 {
@@ -655,7 +655,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( seconds => 172801 );
 
-    is( $dt->datetime, '1972-06-30T23:58:20', "subtract 172801 seconds crossing a leap second (UTC)" );
+    is( $dt->iso8601, '1972-06-30T23:58:20', "subtract 172801 seconds crossing a leap second (UTC)" );
 }
 
 {
@@ -666,7 +666,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( seconds => 172801 );
 
-    is( $dt->datetime, '1972-06-30T20:58:20', "subtract 172801 seconds crossing a leap second (-0300)" );
+    is( $dt->iso8601, '1972-06-30T20:58:20', "subtract 172801 seconds crossing a leap second (-0300)" );
 }
 
 {
@@ -677,7 +677,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->subtract( seconds => 172801 );
 
-    is( $dt->datetime, '1972-07-01T02:58:20', "subtract 172801 seconds crossing a leap second (+0300)" );
+    is( $dt->iso8601, '1972-07-01T02:58:20', "subtract 172801 seconds crossing a leap second (+0300)" );
 }
 
 {
@@ -688,7 +688,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->set_time_zone( '-1200' );
 
-    is( $dt->datetime, '1972-06-30T12:58:20', "24 hour time zone change near leap second" );
+    is( $dt->iso8601, '1972-06-30T12:58:20', "24 hour time zone change near leap second" );
 }
 
 {
@@ -699,7 +699,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
 
     $dt->set_time_zone( '+1200' );
 
-    is( $dt->datetime, '1972-07-01T12:58:20', "24 hour time zone change near leap second" );
+    is( $dt->iso8601, '1972-07-01T12:58:20', "24 hour time zone change near leap second" );
 }
 
 {
@@ -707,11 +707,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 0, minute => 59, second => 59,
                            time_zone => '+0100');
 
-    is( $dt->datetime, '1997-07-01T00:59:59', '+0100 time leap second T-1' );
+    is( $dt->iso8601, '1997-07-01T00:59:59', '+0100 time leap second T-1' );
 
     $dt->set_time_zone('UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
+    is( $dt->iso8601, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
 }
 
 {
@@ -719,11 +719,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 0, minute => 59, second => 60,
                            time_zone => '+0100');
 
-    is( $dt->datetime, '1997-07-01T00:59:60', 'local time leap second T-0' );
+    is( $dt->iso8601, '1997-07-01T00:59:60', 'local time leap second T-0' );
 
     $dt->set_time_zone('UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
+    is( $dt->iso8601, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
 }
 
 {
@@ -731,11 +731,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 1, minute => 0, second => 0,
                            time_zone => '+0100');
 
-    is( $dt->datetime, '1997-07-01T01:00:00', 'local time leap second T+1' );
+    is( $dt->iso8601, '1997-07-01T01:00:00', 'local time leap second T+1' );
 
     $dt->set_time_zone('UTC');
 
-    is( $dt->datetime, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
+    is( $dt->iso8601, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
 }
 
 {
@@ -743,11 +743,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 23, minute => 59, second => 59,
                            time_zone => '+0100');
 
-    is( $dt->datetime, '1997-07-01T23:59:59', 'local time end of leap second day' );
+    is( $dt->iso8601, '1997-07-01T23:59:59', 'local time end of leap second day' );
 
     $dt->set_time_zone('UTC');
 
-    is( $dt->datetime, '1997-07-01T22:59:59', 'UTC time end of leap second day' );
+    is( $dt->iso8601, '1997-07-01T22:59:59', 'UTC time end of leap second day' );
 }
 
 
@@ -756,11 +756,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 22, minute => 59, second => 59,
                            time_zone => '-0100');
 
-    is( $dt->datetime, '1997-06-30T22:59:59', '-0100 time leap second T-1' );
+    is( $dt->iso8601, '1997-06-30T22:59:59', '-0100 time leap second T-1' );
 
     $dt->set_time_zone('UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
+    is( $dt->iso8601, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
 }
 
 {
@@ -768,11 +768,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 22, minute => 59, second => 60,
                            time_zone => '-0100');
 
-    is( $dt->datetime, '1997-06-30T22:59:60', '-0100 time leap second T-0' );
+    is( $dt->iso8601, '1997-06-30T22:59:60', '-0100 time leap second T-0' );
 
     $dt->set_time_zone('UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
+    is( $dt->iso8601, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
 }
 
 {
@@ -780,11 +780,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 23, minute => 0, second => 0,
                            time_zone => '-0100');
 
-    is( $dt->datetime, '1997-06-30T23:00:00', '-0100 time leap second T+1' );
+    is( $dt->iso8601, '1997-06-30T23:00:00', '-0100 time leap second T+1' );
 
     $dt->set_time_zone('UTC');
 
-    is( $dt->datetime, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
+    is( $dt->iso8601, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
 }
 
 {
@@ -792,11 +792,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 23, minute => 59, second => 59,
                            time_zone => 'UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
+    is( $dt->iso8601, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
 
     $dt->set_time_zone('+0100');
 
-    is( $dt->datetime, '1997-07-01T00:59:59', '+0100 time leap second T-1' );
+    is( $dt->iso8601, '1997-07-01T00:59:59', '+0100 time leap second T-1' );
 }
 
 {
@@ -804,11 +804,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 23, minute => 59, second => 60,
                            time_zone => 'UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
+    is( $dt->iso8601, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
 
     $dt->set_time_zone('+0100');
 
-    is( $dt->datetime, '1997-07-01T00:59:60', '+0100 time leap second T-0' );
+    is( $dt->iso8601, '1997-07-01T00:59:60', '+0100 time leap second T-0' );
 }
 
 {
@@ -816,11 +816,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 0, minute => 0, second => 0,
                            time_zone => 'UTC');
 
-    is( $dt->datetime, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
+    is( $dt->iso8601, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
 
     $dt->set_time_zone('+0100');
 
-    is( $dt->datetime, '1997-07-01T01:00:00', '+0100 time leap second T+1' );
+    is( $dt->iso8601, '1997-07-01T01:00:00', '+0100 time leap second T+1' );
 }
 
 {
@@ -828,11 +828,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 23, minute => 59, second => 59,
                            time_zone => 'UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:59', 'UTC time end of leap second day' );
+    is( $dt->iso8601, '1997-06-30T23:59:59', 'UTC time end of leap second day' );
 
     $dt->set_time_zone('+0100');
 
-    is( $dt->datetime, '1997-07-01T00:59:59', '+0100 time end of leap second day' );
+    is( $dt->iso8601, '1997-07-01T00:59:59', '+0100 time end of leap second day' );
 }
 
 
@@ -841,11 +841,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 23, minute => 59, second => 59,
                            time_zone => 'UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
+    is( $dt->iso8601, '1997-06-30T23:59:59', 'UTC time leap second T-1' );
 
     $dt->set_time_zone('-0100');
 
-    is( $dt->datetime, '1997-06-30T22:59:59', '-0100 time leap second T-1' );
+    is( $dt->iso8601, '1997-06-30T22:59:59', '-0100 time leap second T-1' );
 }
 
 {
@@ -853,11 +853,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 23, minute => 59, second => 60,
                            time_zone => 'UTC');
 
-    is( $dt->datetime, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
+    is( $dt->iso8601, '1997-06-30T23:59:60', 'UTC time leap second T-0' );
 
     $dt->set_time_zone('-0100');
 
-    is( $dt->datetime, '1997-06-30T22:59:60', '-0100 time leap second T-0' );
+    is( $dt->iso8601, '1997-06-30T22:59:60', '-0100 time leap second T-0' );
 }
 
 {
@@ -865,11 +865,11 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                            hour => 0, minute => 0, second => 0,
                            time_zone => 'UTC');
 
-    is( $dt->datetime, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
+    is( $dt->iso8601, '1997-07-01T00:00:00', 'UTC time leap second T+1' );
 
     $dt->set_time_zone('-0100');
 
-    is( $dt->datetime, '1997-06-30T23:00:00', '-0100 time leap second T+1' );
+    is( $dt->iso8601, '1997-06-30T23:00:00', '-0100 time leap second T+1' );
 }
 
 {
@@ -887,10 +887,10 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                           );
 
     $dt->add( seconds => 1 );
-    is( $dt->datetime, '2005-12-31T23:59:60', 'dt is 2005-12-31T23:59:60' );
+    is( $dt->iso8601, '2005-12-31T23:59:60', 'dt is 2005-12-31T23:59:60' );
 
     $dt->add( seconds => 1 );
-    is( $dt->datetime, '2006-01-01T00:00:00', 'dt is 2006-01-01T00:00:00' );
+    is( $dt->iso8601, '2006-01-01T00:00:00', 'dt is 2006-01-01T00:00:00' );
 }
 
 # bug reported by Mike Schilli - addition got "stuck" at 60 seconds
@@ -902,10 +902,10 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                           );
 
     $dt->add( seconds => 1 );
-    is( $dt->datetime, '2005-12-31T23:59:60', 'dt is 2005-12-31T23:59:60' );
+    is( $dt->iso8601, '2005-12-31T23:59:60', 'dt is 2005-12-31T23:59:60' );
 
     $dt->add( seconds => 1 );
-    is( $dt->datetime, '2006-01-01T00:00:00', 'dt is 2006-01-01T00:00:00' );
+    is( $dt->iso8601, '2006-01-01T00:00:00', 'dt is 2006-01-01T00:00:00' );
 }
 
 # and this makes sure that fix for the above bug didn't break
@@ -917,10 +917,10 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                           );
 
     $dt->add( seconds => 1 );
-    is( $dt->datetime, '2005-12-30T23:59:59', 'dt is 2005-12-30T23:59:59' );
+    is( $dt->iso8601, '2005-12-30T23:59:59', 'dt is 2005-12-30T23:59:59' );
 
     $dt->add( seconds => 1 );
-    is( $dt->datetime, '2005-12-31T00:00:00', 'dt is 2005-12-31T00:00:00' );
+    is( $dt->iso8601, '2005-12-31T00:00:00', 'dt is 2005-12-31T00:00:00' );
 }
 
 {

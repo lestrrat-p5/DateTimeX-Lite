@@ -23,7 +23,7 @@ is( $dt1->nanosecond, 100, 'nanosecond is 100' );
     my $t2 = DateTimeX::Lite->from_object( object => $t1 );
 
     isa_ok( $t2, 'DateTimeX::Lite' );
-    is( $t2->datetime, '0001-01-01T00:00:00', 'convert from object without tz');
+    is( $t2->iso8601, '0001-01-01T00:00:00', 'convert from object without tz');
     ok( $t2->time_zone->is_floating, 'time_zone is floating');
 }
 

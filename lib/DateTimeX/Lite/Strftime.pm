@@ -8,9 +8,9 @@ package DateTimeX::Lite;
           'B' => sub { $_[0]->month_name },
           'c' => sub { $_[0]->format_cldr( $_[0]->{locale}->datetime_format_default() ) },
           'C' => sub { int( $_[0]->year / 100 ) },
-          'd' => sub { sprintf( '%02d', $_[0]->day_of_month ) },
+          'd' => sub { sprintf( '%02d', $_[0]->day ) },
           'D' => sub { $_[0]->strftime( '%m/%d/%y' ) },
-          'e' => sub { sprintf( '%2d', $_[0]->day_of_month ) },
+          'e' => sub { sprintf( '%2d', $_[0]->day ) },
           'F' => sub { $_[0]->ymd('-') },
           'g' => sub { substr( $_[0]->week_year, -2 ) },
           'G' => sub { $_[0]->week_year },
@@ -130,7 +130,7 @@ package DateTimeX::Lite;
           qr/(ww?)/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->week_number() ) },
           qr/W/     => 'week_of_month',
 
-          qr/(dd?)/    => sub { $_[0]->_zero_padded_number( $1, $_[0]->day_of_month() ) },
+          qr/(dd?)/    => sub { $_[0]->_zero_padded_number( $1, $_[0]->day() ) },
           qr/(D{1,3})/ => sub { $_[0]->_zero_padded_number( $1, $_[0]->day_of_year() ) },
 
           qr/F/    => 'weekday_of_month',

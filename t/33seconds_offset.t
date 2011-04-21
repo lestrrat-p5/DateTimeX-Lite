@@ -13,7 +13,7 @@ use DateTimeX::Lite;
 
     $dt->set_time_zone('+00:00:30');
 
-    is( $dt->datetime, '1997-06-30T23:59:29', '+00:00:30 leap second T-61' );
+    is( $dt->iso8601, '1997-06-30T23:59:29', '+00:00:30 leap second T-61' );
 }
 
 {
@@ -23,7 +23,7 @@ use DateTimeX::Lite;
 
     $dt->set_time_zone('+00:00:30');
 
-    is( $dt->datetime, '1997-06-30T23:59:59', '+00:00:30 leap second T-31' );
+    is( $dt->iso8601, '1997-06-30T23:59:59', '+00:00:30 leap second T-31' );
 }
 
 {
@@ -35,7 +35,7 @@ use DateTimeX::Lite;
 
     $dt->set_time_zone('+00:00:30');
 
-    is( $dt->datetime, '1997-06-30T23:59:60', '+00:00:30 leap second T-30' );
+    is( $dt->iso8601, '1997-06-30T23:59:60', '+00:00:30 leap second T-30' );
 }
 
 {
@@ -47,7 +47,7 @@ use DateTimeX::Lite;
 
     $dt->set_time_zone('+00:00:30');
 
-    is( $dt->datetime, '1997-07-01T00:00:00', '+00:00:30 leap second T-29' );
+    is( $dt->iso8601, '1997-07-01T00:00:00', '+00:00:30 leap second T-29' );
 }
 
 {
@@ -59,7 +59,7 @@ use DateTimeX::Lite;
 
     $dt->set_time_zone('+00:00:30');
 
-    is( $dt->datetime, '1997-07-01T00:00:30', '+00:00:30 leap second T-0' );
+    is( $dt->iso8601, '1997-07-01T00:00:30', '+00:00:30 leap second T-0' );
 }
 
 {
@@ -69,5 +69,5 @@ use DateTimeX::Lite;
 
     $dt->set_time_zone('+00:00:30');
 
-    is( $dt->datetime, '1997-07-01T00:00:30', '+00:00:30 leap second T+1' );
+    is( $dt->iso8601, '1997-07-01T00:00:30', '+00:00:30 leap second T+1' );
 }

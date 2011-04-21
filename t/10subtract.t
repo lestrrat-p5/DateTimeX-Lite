@@ -66,7 +66,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
     is( $dur->delta_seconds, 0, 'date minus itself should have no delta seconds' );
 
     my $new = $date1 - DateTimeX::Lite::Duration->new( years => 2 );
-    is( $new->datetime, '1999-05-10T04:03:02', 'test - overloading' );
+    is( $new->iso8601, '1999-05-10T04:03:02', 'test - overloading' );
 }
 
 {
@@ -83,7 +83,7 @@ use DateTimeX::Lite qw(Arithmetic Overload);
                  );
 
     ok( defined $d2, 'Defined' );
-    is( $d2->datetime, '2001-10-11T04:00:00', 'Subtract and get the right thing' );
+    is( $d2->iso8601, '2001-10-11T04:00:00', 'Subtract and get the right thing' );
 }
 
 # based on bug report from Eric Cholet
