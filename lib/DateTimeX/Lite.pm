@@ -12,7 +12,6 @@ use constant +{
 
 use constant NAN    => INFINITY - INFINITY;
 
-
 use Carp ();
 use DateTimeX::Lite::Duration;
 use DateTimeX::Lite::Infinite;
@@ -455,19 +454,12 @@ sub am_or_pm { $_[0]->{locale}->am_pm_abbreviated->[ $_[0]->hour() < 12 ? 0 : 1 
 # ISO says that the first week of a year is the first week containing
 # a Thursday.  Extending that says that the first week of the month is
 # the first week containing a Thursday.  ICU agrees.
-#
-# Algorithm supplied by Rick Measham, who doesn't understand how it
-# works.  Neither do I.  Please feel free to explain this to me!
 sub week_of_month
 {
     my $self = shift;
 
-    # Faster than cloning just to get the dow
-    my $first_wday_of_month = ( 8 - ( $self->day - $self->day_of_week ) % 7 ) % 7;
-    $first_wday_of_month = 7 unless $first_wday_of_month;
-
-    my $wom = int( ( $self->day + $first_wday_of_month - 2 ) / 7 );
-    return ( $first_wday_of_month <= 4 ) ? $wom + 1 : $wom;
+    my $thu  = $self->day + 4 - $self->day_of_week;
+    return int( ( $thu + 6 ) / 7 );
 }
 
 sub week
@@ -511,12 +503,13 @@ sub _weeks_in_year
     my $self = shift;
     my $year = shift;
 
-    my $jan_one_dow =
-        ( ( DateTimeX::Lite::Util::ymd2rd( $year, 1, 1 ) + 6 ) % 7 ) + 1;
-    my $dec_31_dow =
-        ( ( DateTimeX::Lite::Util::ymd2rd( $year, 12, 31 ) + 6 ) % 7 ) + 1;
-
-    return $jan_one_dow == 4 || $dec_31_dow == 4 ? 53 : 52;
+    my $dow = DateTimeX::Lite::Util::ymd2rd($year, 1, 1) % 7;
+ 
+    # Tears starting with a Thursday and leap years starting with a Wednesday
+    # have 53 weeks.
+    return ( $dow == 4 || ( $dow == 3 && DateTimeX::Lite::Util::is_leap_year( $year ) ) )
+        ? 53
+        : 52;
 }
 
 sub week_year   { ($_[0]->week)[0] }
