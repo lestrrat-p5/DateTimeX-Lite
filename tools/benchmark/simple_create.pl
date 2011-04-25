@@ -1,4 +1,5 @@
 use strict;
+use blib;
 use Benchmark qw(cmpthese);
 use DateTime;
 use DateTimeX::Lite;
