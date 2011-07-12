@@ -413,7 +413,7 @@ sub _convert_to_strftime
     }
 }
 
-foreach my $field qw(
+foreach my $field (qw(
 am_pm_abbreviated
 date_format_full
 date_format_long
@@ -471,7 +471,7 @@ _format_for_yQQQ
 _format_for_yyMMM
 _format_for_yyyyMM
 _format_for_yyyyMMMM
-) {
+)) {
     no strict 'refs';
     *{$field} = sub { 
         my $v = $_[0]->{$field};

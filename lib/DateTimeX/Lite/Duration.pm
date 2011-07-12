@@ -23,7 +23,7 @@ my @all_units = qw( months days minutes seconds nanoseconds );
 sub new
 {
     my ($class, %p) = @_;
-    foreach my $field qw(years months weeks days hours minutes seconds nanoseconds) {
+    foreach my $field (qw(years months weeks days hours minutes seconds nanoseconds)) {
         $p{$field} = 0 unless defined $p{$field};
     }
         
