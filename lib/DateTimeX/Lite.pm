@@ -27,7 +27,7 @@ BEGIN {
         require DateTimeX::Lite::Locale;
     }
 }
-our $VERSION = '0.00003';
+our $VERSION = '0.00004';
 
 BEGIN {
     my @local_c_comp = qw(year month day hour minute second quarter);

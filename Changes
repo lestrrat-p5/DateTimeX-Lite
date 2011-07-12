@@ -1,6 +1,9 @@
 Changes
 =======
 
+0.00004 Jul 13 2011
+  * Fix use of qw() for 5.14 deprecation (rt #69431)
+
 0.00003 Jul 24 2010
   * Fix dependency for File::ShareDir
 
